@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Verify News - TruthGuard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-12">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <h2 class="text-emerald-500 font-bold uppercase tracking-widest text-sm mb-2">AI Engine</h2>
+      <h1 class="text-4xl font-bold mb-4">Fake News Detection</h1>
+      <p class="text-gray-400 max-w-2xl mx-auto">Paste any social media post or news article below. Our system will
+        analyze linguistic patterns, context, and metadata to determine its authenticity.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+      <!-- Form Card -->
+      <div class="glass p-8 reveal">
+        <div class="flex items-center justify-center space-x-8 mb-8">
+          <div class="text-center group">
+            <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"
+              class="mx-auto mb-2 opacity-80 group-hover:opacity-100 transition-opacity" alt="WhatsApp">
+            <span class="text-[10px] text-gray-500 uppercase tracking-tighter">WhatsApp</span>
+          </div>
+          <div class="text-center group">
+            <img src="https://img.icons8.com/color/48/000000/facebook-new.png"
+              class="mx-auto mb-2 opacity-80 group-hover:opacity-100 transition-opacity" alt="Facebook">
+            <span class="text-[10px] text-gray-500 uppercase tracking-tighter">Facebook</span>
+          </div>
+          <div class="text-center group">
+            <img src="https://img.icons8.com/color/48/000000/instagram-new--v1.png"
+              class="mx-auto mb-2 opacity-80 group-hover:opacity-100 transition-opacity" alt="Instagram">
+            <span class="text-[10px] text-gray-500 uppercase tracking-tighter">Instagram</span>
+          </div>
+          <div class="text-center group">
+            <img src="https://img.icons8.com/color/48/000000/audio-wave.png"
+              class="mx-auto mb-2 opacity-80 group-hover:opacity-100 transition-opacity" alt="Audio">
+            <span class="text-[10px] text-gray-500 uppercase tracking-tighter">Voice/Audio</span>
+          </div>
+        </div>
+
+        <form action="/predict" method="POST" enctype="multipart/form-data" class="space-y-8">
+          <div>
+            <label class="block text-gray-300 font-medium mb-3">Paste Content (Text or URL)</label>
+            <textarea name="news"
+              class="glass-input min-h-[150px] text-lg leading-relaxed placeholder:text-gray-600 focus:ring-2 focus:ring-emerald-500"
+              placeholder="Copy suspicious text, news, or URLs from social media here..."></textarea>
+            <p class="mt-3 text-sm text-emerald-500/80 font-medium italic">
+              <span class="inline-block p-1 bg-emerald-500/10 rounded mr-1">💡 Scan Tip:</span>
+              Our AI now supports multi-modal analysis for Text, Voice, Images, and Videos.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+            <div class="relative">
+              <label class="block text-gray-300 font-medium mb-3">Upload Media (Img, Vid, Aud)</label>
+              <div class="relative group">
+                <input type="file" id="media_file" name="media_file" accept="image/*,video/*,audio/*"
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                <div class="glass-input flex items-center justify-between group-hover:bg-white/10 transition-colors">
+                  <span class="text-gray-400 group-hover:text-gray-200 truncate">Choose file...</span>
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit"
+              class="btn-primary py-4 px-8 text-lg flex items-center justify-center space-x-3 w-full">
+              <span>Analyze Now</span>
+              <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        {% if prediction_text %}
+        <!-- Results Section -->
+        <div id="results" class="mt-12 pt-12 border-t border-white/5 reveal">
+          {% set status_color = "emerald" if pred_type == "real" else "red" if pred_type == "fake" else "amber" %}
+
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-6">
+            <div class="flex items-center space-x-6">
+              <div
+                class="w-20 h-20 {% if pred_type == 'real' %}bg-emerald-500/20 border-emerald-500/30{% elif pred_type == 'fake' %}bg-red-500/20 border-red-500/30{% else %}bg-amber-500/20 border-amber-500/30{% endif %} rounded-full flex items-center justify-center border">
+                <span class="text-4xl">
+                  {% if pred_type == 'fake' %}🚩{% elif pred_type == 'real' %}✅{% else %}❓{% endif %}
+                </span>
+              </div>
+              <div>
+                <h3 class="text-sm text-gray-400 uppercase tracking-widest font-bold mb-1">Prediction Result</h3>
+                <p
+                  class="text-3xl font-bold {% if pred_type == 'real' %}text-emerald-500{% elif pred_type == 'fake' %}text-red-500{% else %}text-amber-500{% endif %}">
+                  {{ prediction_text }}</p>
+              </div>
+            </div>
+
+            <div class="flex gap-2">
+              {% if context == 'world_current' %}
+              <span
+                class="px-4 py-2 bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs rounded-xl font-bold">World
+                News 🌍</span>
+              <span
+                class="px-4 py-2 bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs rounded-xl font-bold">Latest
+                ⏱️</span>
+              {% elif context == 'world' %}
+              <span
+                class="px-4 py-2 bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs rounded-xl font-bold">World
+                News 🌍</span>
+              {% elif context == 'current' %}
+              <span
+                class="px-4 py-2 bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs rounded-xl font-bold">Latest
+                ⏱️</span>
+              {% endif %}
+            </div>
+          </div>
+
+          {% if confidence_percent is defined %}
+          <div class="mb-10">
+            <div class="flex justify-between items-end mb-3">
+              <span class="text-gray-300 font-medium">Model Confidence</span>
+              <span
+                class="text-2xl font-bold {% if pred_type == 'real' %}text-emerald-500{% elif pred_type == 'fake' %}text-red-500{% else %}text-amber-500{% endif %}">{{
+                confidence_percent }}%</span>
+            </div>
+            <div class="w-full bg-slate-800 rounded-full h-4 relative overflow-hidden">
+              <div
+                class="h-full rounded-full transition-all duration-1000 ease-out {% if pred_type == 'real' %}bg-emerald-500{% elif pred_type == 'fake' %}bg-red-500{% else %}bg-amber-500{% endif %}"
+                style="width: 0%" id="confidence-bar"></div>
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="https://www.google.com/search?q={{ news_text | urlencode }}" target="_blank"
+              class="btn-glass flex items-center justify-center space-x-3 py-4 hover:bg-white/10">
+              <img src="https://img.icons8.com/color/24/000000/google-logo.png" class="w-5 h-5">
+              <span>Verify on Google</span>
+            </a>
+
+            <div class="flex gap-2">
+              <form action="/feedback" method="POST" class="flex-1">
+                <input type="hidden" name="news_text" value="{{ news_text }}">
+                <button type="submit" name="correct_label" value="0"
+                  class="w-full h-full btn-glass text-emerald-500 hover:text-emerald-400 py-4 text-sm font-bold">Is
+                  Real? ✅</button>
+              </form>
+              <form action="/feedback" method="POST" class="flex-1">
+                <input type="hidden" name="news_text" value="{{ news_text }}">
+                <button type="submit" name="correct_label" value="1"
+                  class="w-full h-full btn-glass text-red-500 hover:text-red-400 py-4 text-sm font-bold">Is Fake?
+                  🚩</button>
+              </form>
+            </div>
+          </div>
+
+          <p class="mt-8 text-center text-gray-500 italic text-sm">
+            {% if pred_type == 'fake' %}
+            Warning! This content shows a high probability of being misinformation.
+            {% else %}
+            Always cross-reference with official news sources for confirmation.
+            {% endif %}
+          </p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    {% if prediction_text %}
+    // Animate confidence bar
+    setTimeout(() => {
+      const bar = document.getElementById('confidence-bar');
+      if (bar) bar.style.width = '{{ confidence_percent }}%';
+    }, 500);
+
+    // Scroll to results
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    {% endif %}
+
+    // Custom File Input Feedback
+    const fileInput = document.getElementById('media_file');
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => {
+        const fileName = e.target.files[0] ? e.target.files[0].name : 'Choose file...';
+        e.target.nextElementSibling.querySelector('span').textContent = fileName;
+        e.target.nextElementSibling.querySelector('span').classList.remove('text-gray-400');
+        e.target.nextElementSibling.querySelector('span').classList.add('text-white');
+      });
+    }
+  });
+</script>
+{% endblock %}

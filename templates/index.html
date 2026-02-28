@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}TruthGuard - Fake News Detection{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-20 flex flex-col lg:flex-row items-center justify-between">
+  <!-- Hero Text -->
+  <div class="lg:w-1/2 text-center lg:text-left mb-16 lg:mb-0">
+    <h1 class="text-5xl lg:text-7xl font-bold leading-tight mb-6 reveal">
+      Identify the <span class="text-emerald-500">Truth</span> In a World of <span class="text-blue-500">Chaos</span>.
+    </h1>
+    <p class="text-xl text-gray-400 mb-10 max-w-xl mx-auto lg:mx-0 reveal">
+      Our AI-powered engine analyzes news from WhatsApp, Facebook, and Instagram to protect you from misinformation.
+    </p>
+
+    <div
+      class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6 reveal">
+      <a href="/predict" class="btn-primary w-full sm:w-auto text-center py-4 px-10 rounded-2xl text-lg">
+        Verify Now
+      </a>
+      <a href="/about" class="btn-glass w-full sm:w-auto text-center py-4 px-10 rounded-2xl text-lg">
+        Learn More
+      </a>
+    </div>
+
+    <div class="mt-12 flex items-center justify-center lg:justify-start space-x-8 reveal">
+      <div class="text-center">
+        <span class="block text-2xl font-bold text-white">99%</span>
+        <span class="text-xs text-gray-500 uppercase tracking-widest">Accuracy</span>
+      </div>
+      <div class="w-px h-10 bg-white/10"></div>
+      <div class="text-center">
+        <span class="block text-2xl font-bold text-white">Instant</span>
+        <span class="text-xs text-gray-500 uppercase tracking-widest">Verification</span>
+      </div>
+      <div class="w-px h-10 bg-white/10"></div>
+      <div class="text-center">
+        <span class="block text-2xl font-bold text-white">10+</span>
+        <span class="text-xs text-gray-500 uppercase tracking-widest">Platforms</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Image/Graphic -->
+  <div class="lg:w-1/2 relative reveal">
+    <div class="relative z-10 p-8 glass transform hover:scale-105 transition-transform duration-700">
+      <img src="/static/social_media_hero.png" alt="Social Media Hero" class="rounded-xl shadow-2xl">
+
+      <!-- Floating Stats Card -->
+      <div class="absolute -bottom-10 -right-10 glass p-6 hidden md:block">
+        <div class="flex items-center space-x-4">
+          <div class="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z">
+              </path>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs text-gray-400">Processing Speed</p>
+            <p class="text-lg font-bold">~0.4s / Post</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Glow -->
+    <div class="absolute inset-0 bg-emerald-500/20 blur-[120px] rounded-full -z-10"></div>
+  </div>
+</div>
+
+<section class="py-20 bg-slate-900/40">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-3xl font-bold mb-4">How it Works</h2>
+      <p class="text-gray-400">Three simple steps to fight misinformation</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="glass p-8 group hover:bg-white/5 transition-colors reveal">
+        <div
+          class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <span class="text-2xl font-bold text-emerald-500">01</span>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Paste Content</h3>
+        <p class="text-gray-400">Copy the suspicious text from any social media platform and paste it into our verify
+          tool.</p>
+      </div>
+
+      <div class="glass p-8 group hover:bg-white/5 transition-colors reveal">
+        <div
+          class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <span class="text-2xl font-bold text-blue-500">02</span>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Deep Analysis</h3>
+        <p class="text-gray-400">Our machine learning model scans the text for patterns common in fake news and
+          misinformation.</p>
+      </div>
+
+      <div class="glass p-8 group hover:bg-white/5 transition-colors reveal">
+        <div
+          class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <span class="text-2xl font-bold text-purple-500">03</span>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Get Result</h3>
+        <p class="text-gray-400">Receive an instant verdict with confidence levels and source verification links.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

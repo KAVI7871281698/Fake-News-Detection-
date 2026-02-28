@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - TruthGuard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-20">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+            <!-- Contact Info -->
+            <div class="reveal">
+                <h1 class="text-5xl font-bold mb-6">Get in <span class="text-emerald-500">Touch</span></h1>
+                <p class="text-xl text-gray-400 mb-12">Have questions about our detection model or want to collaborate?
+                    We'd love to hear from you.</p>
+
+                <div class="space-y-8">
+                    <div class="flex items-center space-x-6">
+                        <div class="w-14 h-14 glass flex items-center justify-center text-emerald-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-bold">Location</p>
+                            <p class="text-lg text-white font-medium">123 Tech Park, OMR, Chennai, TN</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-6">
+                        <div class="w-14 h-14 glass flex items-center justify-center text-blue-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-bold">Email</p>
+                            <a href="mailto:support@fakenewssolution.in"
+                                class="text-lg text-white font-medium hover:text-emerald-500 transition-colors">support@fakenewssolution.in</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-16 rounded-3xl overflow-hidden glass h-64 relative border border-white/10 reveal">
+                    <iframe width="100%" height="100%" frameborder="0" title="map" marginheight="0" marginwidth="0"
+                        scrolling="no"
+                        src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=Chennai+(Fake News Detection Org)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
+                        style="filter: grayscale(1) invert(1) opacity(0.5);"></iframe>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="glass p-10 reveal">
+                <h2 class="text-2xl font-bold mb-8">Send a Message</h2>
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div
+                    class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-xl mb-6 flex items-center space-x-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{{ message }}</span>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <form action="/contact_submit" method="POST" class="space-y-6">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2 font-medium">Name</label>
+                            <input type="text" name="name" class="glass-input" placeholder="Your Name" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2 font-medium">Email</label>
+                            <input type="email" name="email" class="glass-input" placeholder="hello@example.com"
+                                required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2 font-medium">Message</label>
+                        <textarea name="message" class="glass-input min-h-[150px]" placeholder="How can we help?"
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full py-4 text-lg font-bold">
+                        Send Message
+                    </button>
+
+                    <p class="text-center text-xs text-gray-500">We usually respond within 24 hours. We look forward to
+                        your feedback!</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
