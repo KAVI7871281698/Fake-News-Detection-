@@ -13,7 +13,7 @@ nltk.download('stopwords')
 
 # Load the current model and vectorizer
 try:
-    loaded_model     = pickle.load(open("model.pkl", 'rb'))
+    loaded_model = pickle.load(open("model.pkl", 'rb'))
     vector = pickle.load(open("vector.pkl", 'rb'))
     print("Model and Vectorizer loaded successfully.")
 except Exception as e:
