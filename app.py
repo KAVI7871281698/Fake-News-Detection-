@@ -23,7 +23,7 @@ app.secret_key = 'your-secret-key-here'
 
 # World countries for context detection
 WORLD_COUNTRIES = ["india", "usa", "uk", "china", "russia", "israel", "palestine", "uae", "pakistan", "sri lanka", "tamil nadu", "america", "kerala", "japan", "germany", "france", "canada", "australia", "brazil", "mexico", "singapore", "malaysia", "bangladesh"]
-CURRENT_YEARS = ["2024", "2025", "2026", "now", "today", "breaking", "recently", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+CURRENT_YEARS = ["2024", "2025", "2026", "fy25", "fy26", "q3", "q4", "gdp", "now", "today", "breaking", "recently", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
 # Sensationalist/Hoax keywords
 SENSATIONAL_KEYWORDS = ["destroy", "overheat", "stopped working", "online forwards", "unofficial websites", "no official statement", "spread rapidly", "permanently", "within minutes", "conspiracy", "secret", "warning", "must share"]
